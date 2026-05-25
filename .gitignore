@@ -3,6 +3,4 @@ data/raw/
 data/processed/
 __pycache__/
 .env
-*.csv
-*.json
 .DS_Store
