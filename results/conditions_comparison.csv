@@ -1,0 +1,11 @@
+Model,Segment,n,MAE,RMSE
+Linear,Normal,8733,5.652,8.397
+Bagging,Normal,8733,5.528,8.512
+Random Forest,Normal,8733,5.606,8.525
+DNN,Normal,8733,7.056,10.429
+XGBoost,Normal,8733,5.452,8.479
+Linear,Extreme,51,65.31,69.388
+Bagging,Extreme,51,79.967,84.8
+Random Forest,Extreme,51,82.964,87.265
+DNN,Extreme,51,69.377,75.353
+XGBoost,Extreme,51,78.915,83.731

@@ -1,0 +1,6 @@
+Model,MAE,RMSE,MAPE
+XGBoost (champion),5.88,10.59,21.95
+Bagging,5.96,10.67,22.63
+Multiple Linear Regression,6.0,9.9,22.2
+Random Forest,6.06,10.79,23.34
+DNN (MLP 128-64-32),7.42,11.88,28.18
