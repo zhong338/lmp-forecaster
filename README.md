@@ -31,8 +31,31 @@ The figure reflects a tougher multi-regime test, not a worse model.
 - 2022 energy-crisis prices are the hardest to forecast (walk-forward $12–16/MWh)
 - Expected underperformance during extreme weather (polar vortex Jan 2024)
 
+## Model Comparison & Robustness (notebooks 07–09)
+XGBoost was benchmarked against Multiple Linear Regression, Bagging, Random Forest,
+and a DNN (`MLPRegressor`) on the same data and 2024 holdout:
+
+- **Accuracy depends on the metric.** On **MAE**, XGBoost leads ($5.88), with Bagging,
+  Multiple Linear Regression, and Random Forest all within $0.18/MWh; the DNN is weakest
+  ($7.42). On **MSE/RMSE** the ranking *flips* — **Multiple Linear Regression is best**
+  (MSE 98.1 vs XGBoost 112.2), because squared error punishes the extreme spike misses that
+  the tree models can't extrapolate to.
+- **Speed.** Multiple Linear Regression trains in ~0.02s and XGBoost in <1s; the DNN is
+  ~40× slower to train.
+- **Extreme conditions (08).** Every model's error blows up ~10–15× on spike hours. XGBoost
+  is best in normal conditions but among the worst in the spikes (trees can't extrapolate
+  beyond the training range); the linear model degrades least there.
+- **Missing data (09).** Tree models (incl. XGBoost) predict through NaNs natively; Multiple
+  Linear Regression and the DNN need a `SimpleImputer`. Counter-intuitively, when trained on
+  clean data, XGBoost degrades *worst* as gaps grow while Random Forest/Bagging stay robust —
+  "native NaN support" depends on having seen missingness during training.
+
 ## Project Structure
-- `notebooks/` — Step-by-step analysis notebooks
+- `notebooks/` — Step-by-step analysis notebooks:
+  - `01` data exploration · `02` feature engineering · `03` model training ·
+    `04` walk-forward backtesting · `05` evaluation vs baselines ·
+    `06` feature importance (SHAP) · `07` model comparison ·
+    `08` normal vs extreme conditions · `09` missing-data robustness
 - `src/`       — Reusable Python modules
 - `data/`      — Raw and processed MISO data
 - `results/`   — Charts, predictions, backtest results
